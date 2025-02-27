@@ -4,16 +4,17 @@ phases:
   install:
     commands:
       - echo "Installing Dependencies"
-      - cd lambda-layer-project
+      - cd lambda-layer-project/layer/json
       - npm install
   build:
     commands:
       - echo "Preparing Lambda Layer"
-      - mkdir -p layer/nodejs
-      - cp -R node_modules package.json layer/nodejs/
-      - cd layer && zip -r layer.zip nodejs
+      - mkdir -p lambda-layer-project/layer/nodejs
+      - cp -R node_modules package.json ../nodejs/
+      - cd ..
+      - zip -r layer.zip nodejs
       - aws lambda publish-layer-version --layer-name layar_cicd --zip-file fileb://layer.zip --compatible-runtimes nodejs22.x
-      - cd ../..
+      - cd ../../..
       - echo "Packaging Lambda Function"
       - zip -r function.zip lambda-layer-project/index.js
       - aws lambda update-function-code --function-name lambda_layar_cicd --zip-file fileb://function.zip
