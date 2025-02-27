@@ -3,6 +3,8 @@ version: 0.2
 phases:
   install:
     commands:
+      - echo "Installing Zip Utility"
+      - apt-get update && apt-get install -y zip
       - echo "Navigating to Project Directory"
       - cd lambda-layer-project
       - ls -la  # Check if package.json is here
