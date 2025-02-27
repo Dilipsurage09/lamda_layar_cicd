@@ -13,7 +13,13 @@ phases:
       - echo "Preparing Lambda Layer"
       - mkdir -p lambda-layer-project/layer/nodejs
       - cp -R lambda-layer-project/node_modules lambda-layer-project/package.json lambda-layer-project/layer/nodejs/
-      - cd lambda-layer-project
+      - cd lambda-layer-project/layer
+      - echo "Checking contents of layer directory"
+      - ls -la  # Check if nodejs directory is here
+      - ls -la nodejs  # Check contents of nodejs directory
+      - echo "Setting permissions"
+      - chmod -R 755 nodejs  # Ensure proper permissions
+      - echo "Creating Layer ZIP"
       - zip -r layer.zip nodejs
       - mv layer.zip ../layer.zip  # Move zip to correct directory
       - cd ../..
