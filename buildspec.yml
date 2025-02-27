@@ -24,7 +24,7 @@ phases:
       - mv layer/layer.zip ../layer.zip  # Move layer.zip to the root directory
       - echo "Publishing Lambda Layer"
       - ls -la ../  # Confirm layer.zip is in the root directory
-      - aws lambda publish-layer-version --layer-name layar_cicd --zip-file fileb://../layer.zip --compatible-runtimes nodejs18.x
+      - aws lambda publish-layer-version --layer-name layar_cicd --zip-file fileb://../layer.zip --compatible-runtimes nodejs22.x
       - echo "Packaging Lambda Function"
       - zip -r ../function.zip index.js
       - ls -la ../  # Confirm function.zip is in the root directory
