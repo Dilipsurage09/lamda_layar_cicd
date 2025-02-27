@@ -3,15 +3,16 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo "Installing Dependencies"
-      - cd lambda-layer-project/layer || exit 1
+      - echo "Navigating to Project Directory"
+      - cd lambda-layer-project
+      - ls -la  # Check if package.json is here
       - npm install
-      - cd ../../..
+      - cd ..
   build:
     commands:
       - echo "Preparing Lambda Layer"
       - mkdir -p lambda-layer-project/layer/nodejs
-      - cp -R lambda-layer-project/layer/node_modules lambda-layer-project/layer/package.json lambda-layer-project/layer/nodejs/
+      - cp -R lambda-layer-project/node_modules lambda-layer-project/package.json lambda-layer-project/layer/nodejs/
       - cd lambda-layer-project/layer
       - zip -r layer.zip nodejs
       - aws lambda publish-layer-version --layer-name layar_cicd --zip-file fileb://layer.zip --compatible-runtimes nodejs22.x
