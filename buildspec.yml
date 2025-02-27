@@ -15,7 +15,7 @@ phases:
       - cp -R lambda-layer-project/node_modules lambda-layer-project/package.json lambda-layer-project/layer/nodejs/
       - cd lambda-layer-project/layer
       - zip -r layer.zip nodejs
-      - aws lambda publish-layer-version --layer-name layar_cicd --zip-file fileb://layer.zip --compatible-runtimes nodejs22.x
+      - aws lambda publish-layer-version --layer-name layar_cicd --zip-file fileb://lambda-layer-project/layer.zip --compatible-runtimes nodejs22.x
       - cd ../../..
       - echo "Packaging Lambda Function"
       - zip -r function.zip lambda-layer-project/index.js
