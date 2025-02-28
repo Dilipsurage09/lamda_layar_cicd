@@ -10,6 +10,12 @@ phases:
       - ls -la  # Check if package.json is here
       - npm install
       - cd ..
+  pre_build:
+    commands:
+      - echo "Starting Pre-build Phase"
+      - git log -3 --oneline  # Show the last 3 commits with one-line summary
+      - git log -1 --pretty=format:"%h - %an, %ar : %s"  # Custom format for last commit
+      - echo "End of Git Log"    
 
   build:
     commands:
