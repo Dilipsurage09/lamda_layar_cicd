@@ -4,10 +4,10 @@ phases:
   pre_build:
     commands:
       - echo "Installing git..."
-      - if command -v yum >/dev/null 2>&1; then yum install -y git; fi
-      - if command -v apt-get >/dev/null 2>&1; then apt-get update && apt-get install -y git; fi
+      - if command -v yum >/dev/null 2>&1; then sudo yum install -y git; fi
+      - if command -v apt-get >/dev/null 2>&1; then sudo apt-get update && sudo apt-get install -y git; fi
       - echo "Fetching commit history..."
-      - git log -n 5 --pretty=format:"%h - %an, %ar : %s"
+      - git log -n 5 --pretty=format:"'%h - %an, %ar : %s'"
 
   build:
     commands:
