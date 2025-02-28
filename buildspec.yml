@@ -4,25 +4,25 @@ phases:
   install:
     commands:
       - echo "Installing Dependencies and Zip Utility"
-      - apt-get update && apt-get install -y zip git
+      - apt-get update && apt-get install -y zip
       - echo "Navigating to Project Directory"
       - cd lambda-layer-project
       - ls -la  # Check if package.json is here
       - npm install
       - cd ..  # Return to the root directory
-
+      
   pre_build:
     commands:
-     - echo "Starting Pre-build Phase"
-     - echo "Checking Current Directory"
-     - pwd  # Display current directory
-     - echo "Listing Files"
-     - ls -la  # List files to confirm repository presence
-     - echo "Navigating to Source Directory"
-     - cd $CODEBUILD_SRC_DIR  # Go to the checked-out source directory
-     - echo "Displaying Git Commit History"
-     - git log --pretty=oneline -n 3  # Show the last 3 commits in one-line format
-     - echo "End of Git Log"
+      - echo "Starting Pre-build Phase"
+      - echo "Checking Current Directory"
+      - pwd  # Display current directory
+      - echo "Listing Files"
+      - ls -la  # List files to confirm repository presence
+      - echo "Navigating to Source Directory"
+      - cd $CODEBUILD_SRC_DIR  # Go to the checked-out source directory
+      - echo "Displaying Git Commit History"
+      - git log --pretty=oneline -n 3  # Show the last 3 commits in one-line format
+      - echo "End of Git Log"
 
   build:
     commands:
