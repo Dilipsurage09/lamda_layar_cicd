@@ -1,14 +1,24 @@
 version: 0.2
 
+env:
+  secrets-manager:
+    GITHUB_TOKEN: "/codebuild/github-token"
+
 phases:
   pre_build:
     commands:
-      - echo "Fetching latest commit details from GitHub..."
-      - export COMMIT_ID=$CODEBUILD_RESOLVED_SOURCE_VERSION
-      - echo "Commit ID: $COMMIT_ID"
-      - echo "Commit Details:"
-      - curl -s https://api.github.com/repos/Dilipsurage09/lambda_layar_cicd/commits/$COMMIT_ID | jq '.commit | {message: .message, author: .author.name, date: .author.date}'
-
+      - echo "Setting up Git configuration"
+      - git config --global user.name "codebuild-bot"
+      - git config --global user.email "codebuild-bot@example.com"
+      - git remote set-url origin https://$GITHUB_TOKEN@github.com/Dilipsurage/lambda_layar_cicd.git
+      - echo "Fetching full commit history"
+      - git fetch --unshallow
+      
   build:
     commands:
-      - echo "Building the project..."
+      - echo "Displaying Git commit history"
+      - git log --oneline -n 10
+
+artifacts:
+  files:
+    - '**/*'
