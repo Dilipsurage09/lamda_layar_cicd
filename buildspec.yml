@@ -1,24 +1,14 @@
 version: 0.2
 
-env:
-  secrets-manager:
-    GITHUB_TOKEN: "/codebuild/github/token"
-  variables:
-    GITHUB_REPO: "Dilipsurage09/lambda_layar_cicd"
-
 phases:
-  install:
-    commands:
-      - echo "Installing Dependencies"
-      - apt-get update
-      - apt-get install -y curl jq
-
   pre_build:
     commands:
-      - echo "Fetching Git Commit History using GitHub API"
-      - COMMIT_ID=$CODEBUILD_RESOLVED_SOURCE_VERSION
-      - echo "Commit ID: $COMMIT_ID"
-      - echo "Fetching commit details"
-        curl -s -H "Authorization: token $GITHUB_TOKEN" \
-          "https://api.github.com/repos/$GITHUB_REPO/commits?per_page=5" | jq '.[].commit | {message, author}'
-      - echo "End of Git Commit History"
+      - echo "Installing git..."
+      - yum install -y git # For Amazon Linux
+      - apt-get update && apt-get install -y git # For Ubuntu
+      - echo "Fetching commit history..."
+      - git log -n 5 --pretty=format:"%h - %an, %ar : %s" # Show last 5 commits
+
+  build:
+    commands:
+      - echo "Building the project..."
