@@ -4,25 +4,19 @@ phases:
   install:
     commands:
       - echo "Installing Dependencies and Zip Utility"
-      - apt-get update && apt-get install -y zip
+      - apt-get update && apt-get install -y zip git
       - echo "Navigating to Project Directory"
       - cd lambda-layer-project
       - ls -la  # Check if package.json is here
       - npm install
       - cd ..  # Return to the root directory
-      - echo "Fetching full Git history for logging"
-      - git init
-      - git remote add origin https://github.com/Dilipsurage09/lambda_layar_cicd.git
-      - git config --global credential.helper '!f() { echo "username=Dilipsurage09"; echo "password=$GITHUB_TOKEN"; }; f'
-      - git remote -v  # Debug: Check remote URL
-      - git fetch origin main
-      - git checkout main
 
   pre_build:
     commands:
       - echo "Starting Pre-build Phase"
+      - echo "Displaying Git Commit History"
       - git log --pretty=oneline -n 3  # Show the last 3 commits in one-line format
-      - echo "End of Git Log"    
+      - echo "End of Git Log"
 
   build:
     commands:
