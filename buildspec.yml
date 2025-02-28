@@ -18,7 +18,8 @@ phases:
       - echo "Fetching Git Commit History using GitHub API"
       - COMMIT_ID=$CODEBUILD_RESOLVED_SOURCE_VERSION
       - echo "Commit ID: $COMMIT_ID"
-      - echo "Fetching commit details"
-      - curl -s -H "Authorization: token $GITHUB_TOKEN" \
+      - |
+        echo "Fetching commit details"
+        curl -s -H "Authorization: token $GITHUB_TOKEN" \
           "https://api.github.com/repos/$GITHUB_REPO/commits?per_page=5" | jq '.[].commit | {message, author}'
       - echo "End of Git Commit History"
