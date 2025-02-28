@@ -9,7 +9,8 @@ phases:
       - cd lambda-layer-project
       - ls -la  # Check if package.json is here
       - npm install
-      - cd ..
+      - cd ..  # Return to the root directory
+
   pre_build:
     commands:
       - echo "Starting Pre-build Phase"
@@ -26,15 +27,15 @@ phases:
       - ls -la  # Verify nodejs directory content
       - zip -r layer.zip nodejs
       - ls -la  # Confirm that layer.zip is created
-      - cd ..
-      - mv layer/layer.zip ../layer.zip  # Move layer.zip to the root directory
+      - mv layer.zip ../../layer.zip  # Move layer.zip to the root directory
+      - cd ../..  # Return to the root directory
       - echo "Publishing Lambda Layer"
-      - ls -la ../  # Confirm layer.zip is in the root directory
-      - aws lambda publish-layer-version --layer-name layar_cicd --zip-file fileb://../layer.zip --compatible-runtimes nodejs22.x
+      - ls -la  # Confirm layer.zip is in the root directory
+      - aws lambda publish-layer-version --layer-name layar_cicd --zip-file fileb://layer.zip --compatible-runtimes nodejs22.x
       - echo "Packaging Lambda Function"
-      - zip -r ../function.zip index.js
-      - ls -la ../  # Confirm function.zip is in the root directory
-      - aws lambda update-function-code --function-name lambda_layar_cicd --zip-file fileb://../function.zip
+      - zip -r function.zip index.js
+      - ls -la  # Confirm function.zip is in the root directory
+      - aws lambda update-function-code --function-name lambda_layar_cicd --zip-file fileb://function.zip
 
 artifacts:
   files:
