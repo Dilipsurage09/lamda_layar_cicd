@@ -21,6 +21,7 @@ phases:
       - echo "Navigating to Source Directory"
       - cd $CODEBUILD_SRC_DIR  # Go to the checked-out source directory
       - echo "Displaying Git Commit History"
+      - ls -la .git  # Confirm presence of the .git directory
       - git log --pretty=oneline -n 3  # Show the last 3 commits in one-line format
       - echo "End of Git Log"
 
