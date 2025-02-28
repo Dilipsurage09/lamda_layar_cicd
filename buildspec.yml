@@ -3,10 +3,11 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - echo "Fetching commit details..."
-      - echo "Commit ID: $CODEBUILD_RESOLVED_SOURCE_VERSION"
-      - echo "Branch: $CODEBUILD_WEBHOOK_HEAD_REF"
-      - echo "Commit URL: https://github.com/Dilipsurage09/lambda_layar_cicd/commit/$CODEBUILD_RESOLVED_SOURCE_VERSION"
+      - echo "Fetching latest commit details from GitHub..."
+      - export COMMIT_ID=$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - echo "Commit ID: $COMMIT_ID"
+      - echo "Commit Details:"
+      - curl -s https://api.github.com/repos/Dilipsurage09/lambda_layar_cicd/commits/$COMMIT_ID | jq '.commit | {message: .message, author: .author.name, date: .author.date}'
 
   build:
     commands:
