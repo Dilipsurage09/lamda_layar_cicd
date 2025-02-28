@@ -1,32 +1,27 @@
 version: 0.2
 
+env:
+  variables:
+    GITHUB_REPO: "Dilipsurage09/lambda_layar_cicd"
+
 phases:
   install:
     commands:
-      - echo "Installing Dependencies and Zip Utility"
-      - apt-get update && apt-get install -y zip
-      - echo "Navigating to Project Directory"
-      - cd lambda-layer-project
-      - ls -la  # Check if package.json is here
-      - npm install
-      - cd ..  # Return to the root directory
-      
+      - echo "Installing Dependencies"
+      - apt-get update && apt-get install -y curl jq
+
   pre_build:
     commands:
-      - echo "Starting Pre-build Phase"
-      - echo "Checking Current Directory"
-      - pwd  # Display current directory
-      - echo "Listing Files"
-      - ls -la  # List files to confirm repository presence
-      - echo "Navigating to Source Directory"
-      - cd $CODEBUILD_SRC_DIR  # Go to the checked-out source directory
-      - echo "Displaying Git Commit History"
-      - ls -la .git  # Confirm presence of the .git directory
-      - git log --pretty=oneline -n 3  # Show the last 3 commits in one-line format
-      - echo "End of Git Log"
+      - echo "Fetching Git Commit History from GitHub API"
+      - COMMIT_ID=$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - echo "Commit ID: $COMMIT_ID"
+      - echo "Fetching commit details"
+      - curl -s https://api.github.com/repos/$GITHUB_REPO/commits/$COMMIT_ID | jq '.commit | {message, author}'
+      - echo "End of Git Commit History"
 
   build:
     commands:
+      - echo "Starting Build Phase"
       - echo "Preparing Lambda Layer"
       - mkdir -p lambda-layer-project/layer/nodejs
       - cp -R lambda-layer-project/node_modules lambda-layer-project/package.json lambda-layer-project/layer/nodejs/
