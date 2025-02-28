@@ -3,6 +3,7 @@ version: 0.2
 env:
   variables:
     GITHUB_REPO: "Dilipsurage09/lambda_layar_cicd"
+    GITHUB_TOKEN: "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"  # Replace this with your token or use Parameter Store
 
 phases:
   install:
@@ -13,11 +14,12 @@ phases:
 
   pre_build:
     commands:
-      - echo "Fetching Git Commit History from GitHub API"
+      - echo "Fetching Git Commit History using GitHub Token"
       - COMMIT_ID=$CODEBUILD_RESOLVED_SOURCE_VERSION
       - echo "Commit ID: $COMMIT_ID"
       - echo "Fetching commit details"
-      - curl -s "https://api.github.com/repos/$GITHUB_REPO/commits/$COMMIT_ID" | jq '.commit | {message, author}'
+      - curl -s -H "Authorization: token $GITHUB_TOKEN" \
+          "https://api.github.com/repos/$GITHUB_REPO/commits/$COMMIT_ID" | jq '.commit | {message, author}'
       - echo "End of Git Commit History"
 
   build:
