@@ -19,8 +19,9 @@ phases:
       - COMMIT_ID=$CODEBUILD_RESOLVED_SOURCE_VERSION
       - echo "Commit ID: $COMMIT_ID"
       - echo "Fetching commit details"
-      - curl -s -H "Authorization: token $GITHUB_TOKEN" \
-          "https://api.github.com/repos/$GITHUB_REPO/commits/$COMMIT_ID" | jq '.commit | {message, author}'
+      - |
+        curl -s -H "Authorization: token $GITHUB_TOKEN" \
+        "https://api.github.com/repos/$GITHUB_REPO/commits/$COMMIT_ID" | jq '.commit | {message, author}'
       - echo "End of Git Commit History"
 
   build:
