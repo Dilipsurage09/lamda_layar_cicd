@@ -3,10 +3,10 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - echo "Navigating to source directory..."
-      - cd $CODEBUILD_SRC_DIR
-      - echo "Showing recent commit history:"
-      - git log -n 5 --oneline
+      - echo "Fetching commit details..."
+      - echo "Commit ID: $CODEBUILD_RESOLVED_SOURCE_VERSION"
+      - echo "Branch: $CODEBUILD_WEBHOOK_HEAD_REF"
+      - echo "Commit URL: https://github.com/Dilipsurage09/lambda_layar_cicd/commit/$CODEBUILD_RESOLVED_SOURCE_VERSION"
 
   build:
     commands:
