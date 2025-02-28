@@ -3,8 +3,11 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - echo "Hello from pre_build"
+      - echo "Installing git..."
+      - yum install -y git || apt-get update && apt-get install -y git
+      - echo "Fetching commit history..."
+      - git log -n 5 --pretty=format:"%h - %an, %ar : %s"
 
   build:
     commands:
-      - echo "Hello from build"
+      - echo "Building the project..."
