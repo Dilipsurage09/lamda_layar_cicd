@@ -1,9 +1,10 @@
 version: 0.2
 
 env:
+  parameter-store:
+    GITHUB_TOKEN: "/github/token"
   variables:
     GITHUB_REPO: "Dilipsurage09/lambda_layar_cicd"
-    GITHUB_TOKEN: "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"  # Replace this with your token or use Parameter Store
 
 phases:
   install:
