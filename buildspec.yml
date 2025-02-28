@@ -4,10 +4,9 @@ phases:
   pre_build:
     commands:
       - echo "Installing git..."
-      - yum install -y git # For Amazon Linux
-      - apt-get update && apt-get install -y git # For Ubuntu
+      - yum install -y git || apt-get update && apt-get install -y git
       - echo "Fetching commit history..."
-      - git log -n 5 --pretty=format:"%h - %an, %ar : %s" # Show last 5 commits
+      - git log -n 5 --pretty=format:"%h - %an, %ar : %s"
 
   build:
     commands:
