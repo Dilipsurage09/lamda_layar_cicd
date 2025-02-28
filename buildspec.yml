@@ -12,6 +12,8 @@ phases:
       - cd ..  # Return to the root directory
       - echo "Fetching full Git history for logging"
       - git init
+      - git config --global --unset credential.helper
+      - git config --global credential.helper store
       - git remote add origin https://${GITHUB_TOKEN}:x-oauth-basic@github.com/Dilipsurage09/lambda_layar_cicd.git
       - git fetch origin main
       - git checkout main
