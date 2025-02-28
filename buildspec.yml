@@ -12,7 +12,7 @@ phases:
       - cd ..  # Return to the root directory
       - echo "Fetching full Git history for logging"
       - git init
-      - git remote add origin $CODEBUILD_SOURCE_REPO_URL
+      - git remote add origin https://github.com/Dilipsurage09/lambda_layar_cicd.git
       - git fetch origin main --unshallow
       - git checkout main
 
