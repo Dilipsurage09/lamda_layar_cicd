@@ -4,7 +4,7 @@ phases:
   install:
     commands:
       - echo "Installing Dependencies and Zip Utility"
-      - npm install -g npm@latest  # Update npm
+      - npm install 
       - echo "Navigating to Project Directory"
       - cd lambda-layer-project
       - ls -la  # Check if package.json is here
