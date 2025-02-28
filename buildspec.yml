@@ -14,15 +14,15 @@ phases:
   pre_build:
     commands:
      - echo "Starting Pre-build Phase"
-    - echo "Checking Current Directory"
-    - pwd  # Display current directory
-    - echo "Listing Files"
-    - ls -la  # List files to confirm repository presence
-    - echo "Navigating to Source Directory"
-    - cd $CODEBUILD_SRC_DIR  # Go to the checked-out source directory
-    - echo "Displaying Git Commit History"
-    - git log --pretty=oneline -n 3  # Show the last 3 commits in one-line format
-    - echo "End of Git Log"
+     - echo "Checking Current Directory"
+     - pwd  # Display current directory
+     - echo "Listing Files"
+     - ls -la  # List files to confirm repository presence
+     - echo "Navigating to Source Directory"
+     - cd $CODEBUILD_SRC_DIR  # Go to the checked-out source directory
+     - echo "Displaying Git Commit History"
+     - git log --pretty=oneline -n 3  # Show the last 3 commits in one-line format
+     - echo "End of Git Log"
 
   build:
     commands:
