@@ -13,7 +13,7 @@ phases:
       - echo "Fetching full Git history for logging"
       - git init
       - git remote add origin https://github.com/Dilipsurage09/lambda_layar_cicd.git
-      - git fetch origin main --unshallow
+      - git fetch origin main
       - git checkout main
 
   pre_build:
@@ -36,12 +36,4 @@ phases:
       - echo "Publishing Lambda Layer"
       - ls -la  # Confirm layer.zip is in the root directory
       - aws lambda publish-layer-version --layer-name layar_cicd --zip-file fileb://layer.zip --compatible-runtimes nodejs22.x
-      - echo "Packaging Lambda Function"
-      - zip -r function.zip index.js
-      - ls -la  # Confirm function.zip is in the root directory
-      - aws lambda update-function-code --function-name lambda_layar_cicd --zip-file fileb://function.zip
-
-artifacts:
-  files:
-    - layer.zip
-    - function.zip
+      
