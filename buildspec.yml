@@ -1,16 +1,15 @@
 version: 0.2
 
 env:
-  parameter-store:
-    GITHUB_TOKEN: "/github/token"
   variables:
     GITHUB_REPO: "Dilipsurage09/lambda_layar_cicd"
+    GITHUB_TOKEN: "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"  # For testing, but consider using Parameter Store in production
 
 phases:
   install:
     commands:
       - echo "Installing Dependencies"
-      - apt-get update
+      - apt-get update -y
       - apt-get install -y curl jq zip
 
   pre_build:
@@ -19,22 +18,20 @@ phases:
       - COMMIT_ID=$CODEBUILD_RESOLVED_SOURCE_VERSION
       - echo "Commit ID: $COMMIT_ID"
       - echo "Fetching commit details"
-      - |
-        curl -s -H "Authorization: token $GITHUB_TOKEN" \
-        "https://api.github.com/repos/$GITHUB_REPO/commits/$COMMIT_ID" | jq '.commit | {message, author}'
+      - curl -s -H "Authorization: token $GITHUB_TOKEN" "https://api.github.com/repos/$GITHUB_REPO/commits/$COMMIT_ID" | jq '.commit | {message, author}'
       - echo "End of Git Commit History"
 
   build:
     commands:
       - echo "Preparing Lambda Layer"
-      - mkdir -p lambda-layer-project/layer/nodejs
-      - cp -R lambda-layer-project/node_modules lambda-layer-project/package.json lambda-layer-project/layer/nodejs/
-      - cd lambda-layer-project/layer
+      - mkdir -p layer/nodejs
+      - cp -R node_modules package.json layer/nodejs/
+      - cd layer
       - zip -r layer.zip nodejs
-      - mv layer.zip ../../layer.zip
-      - cd ../..
+      - mv layer.zip ../layer.zip
+      - cd ..
       - echo "Publishing Lambda Layer"
-      - aws lambda publish-layer-version --layer-name layar_cicd --zip-file fileb://layer.zip --compatible-runtimes nodejs22.x
+      - aws lambda publish-layer-version --layer-name layar_cicd --zip-file fileb://layer.zip --compatible-runtimes nodejs18.x
       - echo "Packaging Lambda Function"
       - zip -r function.zip index.js
       - aws lambda update-function-code --function-name lambda_layar_cicd --zip-file fileb://function.zip
