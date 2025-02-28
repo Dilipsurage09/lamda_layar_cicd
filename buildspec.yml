@@ -13,10 +13,9 @@ phases:
 
   pre_build:
     commands:
-      - echo "Starting Pre-build Phase"
-      - git log -3 --oneline  # Show the last 3 commits with one-line summary
-      - git log -1 --pretty=format:"%h - %an, %ar : %s"  # Custom format for last commit
-      - echo "End of Git Log"    
+       - echo "Starting Pre-build Phase"
+       - git log --pretty=oneline -n 3  # Show the last 3 commits in one-line format
+       - echo "End of Git Log"    
 
   build:
     commands:
