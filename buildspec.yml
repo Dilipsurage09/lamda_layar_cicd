@@ -1,4 +1,4 @@
-ersion: 0.2
+version: 0.2
 
 phases:
   install:
@@ -13,9 +13,9 @@ phases:
 
   pre_build:
     commands:
-       - echo "Starting Pre-build Phase"
-       - git log --pretty=oneline -n 3  # Show the last 3 commits in one-line format
-       - echo "End of Git Log"    
+      - echo "Starting Pre-build Phase"
+      - git log --pretty=oneline -n 3  # Show the last 3 commits in one-line format
+      - echo "End of Git Log"    
 
   build:
     commands:
