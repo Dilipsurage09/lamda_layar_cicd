@@ -1,10 +1,10 @@
-version: 0.2
+ersion: 0.2
 
 phases:
   install:
     commands:
       - echo "Installing Dependencies and Zip Utility"
-      - npm install 
+      - apt-get update && apt-get install -y zip
       - echo "Navigating to Project Directory"
       - cd lambda-layer-project
       - ls -la  # Check if package.json is here
