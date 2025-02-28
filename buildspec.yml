@@ -10,6 +10,11 @@ phases:
       - ls -la  # Check if package.json is here
       - npm install
       - cd ..  # Return to the root directory
+      - echo "Fetching full Git history for logging"
+      - git init
+      - git remote add origin $CODEBUILD_SOURCE_REPO_URL
+      - git fetch origin main --unshallow
+      - git checkout main
 
   pre_build:
     commands:
